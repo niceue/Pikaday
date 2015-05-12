@@ -209,10 +209,10 @@
         isRTL: false,
 
         // Additional text to append to the year in the calendar title
-        yearSuffix: '',
+        yearSuffix: '年',
 
         // Render the month after year in the calendar title
-        showMonthAfterYear: false,
+        showMonthAfterYear: true,
 
         // how many months are visible
         numberOfMonths: 1,
@@ -229,7 +229,7 @@
             previousMonth : '上一月',
             nextMonth     : '下一月',
             months        : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
-            weekdays      : ['星期天', '星期一','星期二','星期三','星期四','星期五','星期六'],
+            weekdays      : ['星期日', '星期一','星期二','星期三','星期四','星期五','星期六'],
             weekdaysShort : ['日','一','二','三','四','五','六']
         },
 
@@ -272,10 +272,10 @@
             arr.push('is-selected');
         }
         return '<td data-day="' + d + '" class="' + arr.join(' ') + '">' +
-                 '<button class="pika-button pika-day" type="button" ' +
+                 '<a href="javascript:" class="pika-button pika-day" ' +
                     'data-pika-year="' + y + '" data-pika-month="' + m + '" data-pika-day="' + d + '">' +
                         d +
-                 '</button>' +
+                 '</a>' +
                '</td>';
     },
 
