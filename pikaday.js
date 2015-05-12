@@ -226,11 +226,11 @@
 
         // internationalization
         i18n: {
-            previousMonth : 'Previous Month',
-            nextMonth     : 'Next Month',
-            months        : ['January','February','March','April','May','June','July','August','September','October','November','December'],
-            weekdays      : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
-            weekdaysShort : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+            previousMonth : '上一月',
+            nextMonth     : '下一月',
+            months        : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+            weekdays      : ['星期天', '星期一','星期二','星期三','星期四','星期五','星期六'],
+            weekdaysShort : ['日','一','二','三','四','五','六']
         },
 
         // Theme Classname
