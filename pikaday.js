@@ -7,35 +7,22 @@
 (function (root, factory)
 {
     'use strict';
-
-    var moment;
     if (typeof exports === 'object') {
-        // CommonJS module
-        // Load moment.js as an optional dependency
-        try { moment = require('moment'); } catch (e) {}
-        module.exports = factory(moment);
-    } else if (typeof define === 'function' && define.amd) {
+        module.exports = factory();
+    } else if (typeof define === 'function' && (define.amd || define.cmd)) {
         // AMD. Register as an anonymous module.
-        define(function (req)
-        {
-            // Load moment.js as an optional dependency
-            var id = 'moment';
-            try { moment = req(id); } catch (e) {}
-            return factory(moment);
-        });
+        define(factory);
     } else {
-        root.Pikaday = factory(root.moment);
+        root.Pikaday = factory();
     }
-}(this, function (moment)
+}(this, function ()
 {
     'use strict';
 
     /**
      * feature detection and helper functions
      */
-    var hasMoment = typeof moment === 'function',
-
-    hasEventListeners = !!window.addEventListener,
+    var hasEventListeners = !!window.addEventListener,
 
     document = window.document,
 
@@ -385,6 +372,26 @@
         return '<table cellpadding="0" cellspacing="0" class="pika-table">' + renderHead(opts) + renderBody(data) + '</table>';
     },
 
+    formatDate = function(d, p) {
+        var z = {
+            M : d.getMonth() + 1,
+            D : d.getDate(),
+            h : d.getHours(),
+            m : d.getMinutes(),
+            s : d.getSeconds()
+        };
+        p = p.replace(/(M+|D+|h+|m+|s+)/g, function(v) {
+            return ((v.length > 1 ? '0' : '') + z[v.slice(-1)]).slice(-2);
+        });
+        return p.replace(/(Y+)/g, function(v) {
+            return d.getFullYear().toString().slice(-v.length);
+        });
+    },
+
+    toDate = function(dateString) {
+        new Date(Date.parse(dateString.replace(/-|\./g, '/')));
+    },
+
 
     /**
      * Pikaday constructor
@@ -459,13 +466,9 @@
             if (e.firedBy === self) {
                 return;
             }
-            if (hasMoment) {
-                date = moment(opts.field.value, opts.format);
-                date = (date && date.isValid()) ? date.toDate() : null;
-            }
-            else {
-                date = new Date(Date.parse(opts.field.value));
-            }
+
+            date = toDate(opts.field.value);
+
             if (isDate(date)) {
               self.setDate(date)
             }
@@ -545,11 +548,7 @@
             addEvent(opts.field, 'change', self._onInputChange);
 
             if (!opts.defaultDate) {
-                if (hasMoment && opts.field.value) {
-                    opts.defaultDate = moment(opts.field.value, opts.format).toDate();
-                } else {
-                    opts.defaultDate = new Date(Date.parse(opts.field.value));
-                }
+                opts.defaultDate = toDate(opts.field.value);
                 opts.setDefaultDate = true;
             }
         }
@@ -647,27 +646,9 @@
         /**
          * return a formatted string of the current selection (using Moment.js if available)
          */
-        toString: function(format)
+        toString: function()
         {
-            return !isDate(this._d) ? '' : hasMoment ? moment(this._d).format(format || this._o.format) : this._d.toDateString();
-        },
-
-        /**
-         * return a Moment.js object of the current selection (if available)
-         */
-        getMoment: function()
-        {
-            return hasMoment ? moment(this._d) : null;
-        },
-
-        /**
-         * set the current selection from a Moment.js object (if available)
-         */
-        setMoment: function(date, preventOnSelect)
-        {
-            if (hasMoment && moment.isMoment(date)) {
-                this.setDate(date.toDate(), preventOnSelect);
-            }
+            return !isDate(this._d) ? '' : formatDate(this._d, this._o.format);
         },
 
         /**
@@ -694,7 +675,7 @@
                 return this.draw();
             }
             if (typeof date === 'string') {
-                date = new Date(Date.parse(date));
+                date = toDate(date);
             }
             if (!isDate(date)) {
                 return;
