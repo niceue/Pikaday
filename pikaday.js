@@ -358,10 +358,10 @@
         }
 
         if (c === 0) {
-            html += '<button class="pika-prev' + (prev ? '' : ' is-disabled') + '" type="button">' + opts.i18n.previousMonth + '</button>';
+            html += '<button class="pika-prev' + (prev ? '' : ' is-disabled') + '" type="button"><i></i>' + opts.i18n.previousMonth + '</button>';
         }
         if (c === (instance._o.numberOfMonths - 1) ) {
-            html += '<button class="pika-next' + (next ? '' : ' is-disabled') + '" type="button">' + opts.i18n.nextMonth + '</button>';
+            html += '<button class="pika-next' + (next ? '' : ' is-disabled') + '" type="button"><i></i>' + opts.i18n.nextMonth + '</button>';
         }
 
         return html += '</div>';
@@ -410,6 +410,9 @@
             var target = e.target || e.srcElement;
             if (!target) {
                 return;
+            }
+            if (target.tagName === 'I') {
+                target = target.parentNode;
             }
 
             if (!hasClass(target.parentNode, 'is-disabled')) {

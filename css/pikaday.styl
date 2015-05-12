@@ -54,7 +54,7 @@
         margin: 0;
         left: 0;
         top: 5px;
-        filter: alpha(opacity=0);
+        filter: s("alpha(opacity=0)");
         opacity: 0;
     }
 }
@@ -102,20 +102,33 @@
         cursor: default;
         opacity: .2;
     }
+    i {
+        position: absolute;
+        width: 0; height: 0;
+        border:7px solid #fff;
+    }
 }
 
 .pika-prev,
 .is-rtl .pika-next {
     float: left;
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAYAAAAsEj5rAAAAUklEQVR42u3VMQoAIBADQf8Pgj+OD9hG2CtONJB2ymQkKe0HbwAP0xucDiQWARITIDEBEnMgMQ8S8+AqBIl6kKgHiXqQqAeJepBo/z38J/U0uAHlaBkBl9I4GwAAAABJRU5ErkJggg==');
     *left: 0;
+    i {
+        border-left-width: 0;
+        border-right-color: #000;
+        left: 6px;
+    }
 }
 
 .pika-next,
 .is-rtl .pika-prev {
     float: right;
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAYAAAAsEj5rAAAAU0lEQVR42u3VOwoAMAgE0dwfAnNjU26bYkBCFGwfiL9VVWoO+BJ4Gf3gtsEKKoFBNTCoCAYVwaAiGNQGMUHMkjGbgjk2mIONuXo0nC8XnCf1JXgArVIZAQh5TKYAAAAASUVORK5CYII=');
     *right: 0;
+    i {
+        border-right-width: 0;
+        border-left-color: #000;
+        right: 6px;
+    }
 }
 
 .pika-select {
